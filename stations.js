@@ -7,8 +7,12 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
 
                   var map = pageSettings.mapPlugin.getNative();
                   var markers = [];
+                  var hospitals = [];
+                  var hems = [];
                   var showStations = true;
                   var showMeteo = false;
+                  var showHospitals = false;
+                  var showHems = false;
                   var lastDatePart = "";
                   var meteoLayerTemp = null;
 
@@ -64,28 +68,128 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
 
 
 
-                  function CzadsbControlRecivers(controlDiv, map) {
+                  function CzadsbControl(controlDiv, map) {
 
-                    var receiversUIMenu = document.createElement('div');
-                    receiversUIMenu.className = "vrsMenu";
-                    receiversUIMenu.style.paddingRight = "10px";
-                    controlDiv.appendChild(receiversUIMenu);
+                    var recDiv = document.createElement('div');
+                    recDiv.style.background = "white";
+                    recDiv.style.margin = "10px";
+                    controlDiv.appendChild(recDiv);
 
+                    var receiversUIMenu = document.createElement('ul');
+                    receiversUIMenu.className = "dl-menu dl-menuopen";
+                    receiversUIMenu.style.borderColor = "white";
+                    recDiv.appendChild(receiversUIMenu);
 
+                    // layers
+                    // meteo
+
+                    // var meteoDiv = document.createElement('div');
+                    // meteoDiv.style.margin = "8px";
+                    // receiversUIMenu.appendChild(meteoDiv);
+                    //
+                    // var meteoLi = document.createElement('p');
+                    // meteoDiv.appendChild(meteoLi);
+                    //
+                    // var meteoRadio = document.createElement('input');
+                    // meteoRadio.type = "radio";
+                    // meteoRadio.name = "layer";
+                    // meteoRadio.value = "meteo";
+                    // meteoRadio.id = "meteo";
+                    // meteoLi.appendChild(meteoRadio);
+                    //
+                    // var meteoLabel = document.createElement('label')
+                    // meteoLabel.htmlFor = "meteo";
+                    // meteoLabel.appendChild(document.createTextNode('Meteo'));
+                    // meteoLi.appendChild(meteoLabel);
+                    //
+                    //
+                    // // Setup the click event listeners
+                    // meteoRadio.addEventListener('click', function(e) {
+                    //   showMeteo = !showMeteo;
+                    //   meteoLayer();
+                    // });
+
+                    // markers
+                    // receivers
                     var receiversUI = document.createElement('div');
-                    receiversUI.className = "mapButton";
+                    receiversUI.style.margin = "8px";
                     receiversUIMenu.appendChild(receiversUI);
 
-                    var receiverText = document.createElement('span');
-                    receiverText.innerHTML = 'Stations';
-                    receiversUI.appendChild(receiverText);
+                    var receiverLi = document.createElement('p');
+                    receiversUI.appendChild(receiverLi);
+
+                    var receiverCheckbox = document.createElement('input');
+                    receiverCheckbox.type = "checkbox";
+                    receiverCheckbox.name = "name";
+                    receiverCheckbox.value = "value";
+                    receiverCheckbox.id = "id";
+                    receiverCheckbox.checked = showStations;
+                    receiverLi.appendChild(receiverCheckbox);
+
+                    var checkboxLabel = document.createElement('label')
+                    checkboxLabel.htmlFor = "id";
+                    checkboxLabel.appendChild(document.createTextNode('Stations'));
+                    receiverLi.appendChild(checkboxLabel);
 
                     // Setup the click event listeners
-                    receiversUIMenu.addEventListener('click', function() {
-                      showStations = !showStations;
+                    receiverCheckbox.addEventListener('click', function(e) {
+                      showStations = e.target.checked;
                       loadStations();
                     });
 
+                    // hospitals
+                    var hospitalsUI = document.createElement('div');
+                    hospitalsUI.style.margin = "8px";
+                    receiversUIMenu.appendChild(hospitalsUI);
+
+                    var hospitalsLi = document.createElement('p');
+                    hospitalsUI.appendChild(hospitalsLi);
+
+                    var hospitalsCheckbox = document.createElement('input');
+                    hospitalsCheckbox.type = "checkbox";
+                    hospitalsCheckbox.name = "hospitals";
+                    hospitalsCheckbox.value = "value";
+                    hospitalsCheckbox.id = "id";
+                    hospitalsCheckbox.checked = showHospitals;
+                    hospitalsLi.appendChild(hospitalsCheckbox);
+
+                    var hospitalsLabel = document.createElement('label')
+                    hospitalsLabel.htmlFor = "id";
+                    hospitalsLabel.appendChild(document.createTextNode('Hospitals'));
+                    hospitalsLi.appendChild(hospitalsLabel);
+
+                    // Setup the click event listeners
+                    hospitalsCheckbox.addEventListener('click', function(e) {
+                      showHospitals = e.target.checked;
+                      loadHospitals();
+                    });
+
+                    // hems
+                    var hemsUI = document.createElement('div');
+                    hemsUI.style.margin = "8px";
+                    receiversUIMenu.appendChild(hemsUI);
+
+                    var hemsLi = document.createElement('p');
+                    hemsUI.appendChild(hemsLi);
+
+                    var hemsCheckbox = document.createElement('input');
+                    hemsCheckbox.type = "checkbox";
+                    hemsCheckbox.name = "hems";
+                    hemsCheckbox.value = "value";
+                    hemsCheckbox.id = "id";
+                    hemsCheckbox.checked = showHems;
+                    hemsLi.appendChild(hemsCheckbox);
+
+                    var hemsLabel = document.createElement('label')
+                    hemsLabel.htmlFor = "id";
+                    hemsLabel.appendChild(document.createTextNode('Hems'));
+                    hemsLi.appendChild(hemsLabel);
+
+                    // Setup the click event listeners
+                    hemsCheckbox.addEventListener('click', function(e) {
+                      showHems = e.target.checked;
+                      loadHems();
+                    });
                   }
 
                   function MeteoControlRecivers(controlDiv, map) {
@@ -157,11 +261,103 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                     }
                   }
 
+
+                  var loadHospitals = function() {
+                    if (showHospitals) {
+                      $.ajax({
+                        type: "GET",
+                        url: "hospitals.json",
+                        data: '{}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+
+                          for (var i = 0; i < hospitals.length; i++) {
+                            hospitals[i].setMap(null);
+                          }
+
+                          hospitals = [];
+
+                          response.data.forEach(function (entry) {
+
+                            marker = new google.maps.Marker({
+                              map: map,
+                              position: entry.position,
+                              icon: entry.icon,
+                              title: entry.title
+                            });
+
+                            hospitals.push(marker);
+                          })
+
+                        },
+                        failure: function (response) {
+                          console.error(response);
+                        },
+                        error: function (response) {
+                          console.error(response);
+                        }
+                      })
+                    } else {
+                      for (var i = 0; i < hospitals.length; i++) {
+                        hospitals[i].setMap(null);
+                      }
+
+                      hospitals = [];
+                    }
+                  }
+
+
+                  var loadHems = function() {
+                    if (showHems) {
+                      $.ajax({
+                        type: "GET",
+                        url: "hems.json",
+                        data: '{}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+
+                          for (var i = 0; i < hems.length; i++) {
+                            hems[i].setMap(null);
+                          }
+
+                          hems = [];
+
+                          response.data.forEach(function (entry) {
+
+                            marker = new google.maps.Marker({
+                              map: map,
+                              position: entry.position,
+                              icon: entry.icon,
+                              title: entry.title
+                            });
+
+                            hems.push(marker);
+                          })
+
+                        },
+                        failure: function (response) {
+                          console.error(response);
+                        },
+                        error: function (response) {
+                          console.error(response);
+                        }
+                      })
+                    } else {
+                      for (var i = 0; i < hems.length; i++) {
+                        hems[i].setMap(null);
+                      }
+
+                      hems = [];
+                    }
+                  }
+
                   loadStations();
                   meteoLayer();
 
                   var receiversControlDiv = document.createElement('div');
-                  var centerControl = new CzadsbControlRecivers(receiversControlDiv, map);
+                  var centerControl = new CzadsbControl(receiversControlDiv, map);
 
                   receiversControlDiv.index = 1;
                   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(receiversControlDiv);
