@@ -153,6 +153,10 @@
                 map = pageSettings.mapPlugin.getNative();
 
                 loadStations();
+
+                window.setInterval(function () {
+                  loadStations();
+                }, 60000 * 10);
               }
               })
           }

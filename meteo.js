@@ -95,10 +95,6 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(meteoControlDiv);
 
                   window.setInterval(function () {
-                    loadStations();
-                  }, 60000 * 10);
-
-                  window.setInterval(function () {
                     meteoLayer();
                   }, 60000 * 2);
                 }
