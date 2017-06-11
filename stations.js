@@ -122,12 +122,12 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                     receiverCheckbox.type = "checkbox";
                     receiverCheckbox.name = "name";
                     receiverCheckbox.value = "value";
-                    receiverCheckbox.id = "id";
+                    receiverCheckbox.id = "receiverId";
                     receiverCheckbox.checked = showStations;
                     receiverLi.appendChild(receiverCheckbox);
 
                     var checkboxLabel = document.createElement('label')
-                    checkboxLabel.htmlFor = "id";
+                    checkboxLabel.htmlFor = "receiverId";
                     checkboxLabel.appendChild(document.createTextNode('Stations'));
                     receiverLi.appendChild(checkboxLabel);
 
@@ -149,12 +149,12 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                     hospitalsCheckbox.type = "checkbox";
                     hospitalsCheckbox.name = "hospitals";
                     hospitalsCheckbox.value = "value";
-                    hospitalsCheckbox.id = "id";
+                    hospitalsCheckbox.id = "hospitalsId";
                     hospitalsCheckbox.checked = showHospitals;
                     hospitalsLi.appendChild(hospitalsCheckbox);
 
                     var hospitalsLabel = document.createElement('label')
-                    hospitalsLabel.htmlFor = "id";
+                    hospitalsLabel.htmlFor = "hospitalsId";
                     hospitalsLabel.appendChild(document.createTextNode('Hospitals'));
                     hospitalsLi.appendChild(hospitalsLabel);
 
@@ -176,12 +176,12 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                     hemsCheckbox.type = "checkbox";
                     hemsCheckbox.name = "hems";
                     hemsCheckbox.value = "value";
-                    hemsCheckbox.id = "id";
+                    hemsCheckbox.id = "hemsId";
                     hemsCheckbox.checked = showHems;
                     hemsLi.appendChild(hemsCheckbox);
 
                     var hemsLabel = document.createElement('label')
-                    hemsLabel.htmlFor = "id";
+                    hemsLabel.htmlFor = "hemsId";
                     hemsLabel.appendChild(document.createTextNode('Hems'));
                     hemsLi.appendChild(hemsLabel);
 
