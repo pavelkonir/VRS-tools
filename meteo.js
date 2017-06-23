@@ -14,7 +14,7 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                     var mm = this.getUTCMonth() + 1;
                     var dd = this.getUTCDate();
                     var hh = this.getUTCHours();
-                    var min = Math.floor(this.getUTCMinutes()/10)*10;
+                    var min = Math.floor(this.getUTCMinutes()/15)*15;
 
                     return [this.getFullYear(),
                       (mm>9 ? '' : '0') + mm,
