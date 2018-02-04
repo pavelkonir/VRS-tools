@@ -77,7 +77,7 @@
             normalFileName: 'HelicopterMedical.png',
             selectedFileName: 'HelicopterMedicalSelected.png',
             size: { width: 40, height: 40 },
-            matches: function(aircraft) { return (aircraft.icao.val.length === 6 && aircraft.icao.val.substring(0, 2) !== '49') && ((aircraft.squawk.val === '0045') || (aircraft.squawk.val === '0046') || (aircraft.squawk.val === '0047')  || (aircraft.squawk.val === '0020')); }
+            matches: function(aircraft) { return (aircraft.squawk.val === '0045') || (aircraft.squawk.val === '0046') || (aircraft.squawk.val === '0047') || ((aircraft.icao.val.length === 6 && aircraft.icao.val.substring(0, 2) !== '49') && (aircraft.squawk.val === '0020')); }
         }));
 		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
             normalFileName: 'FollowMe.png',
