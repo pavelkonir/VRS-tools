@@ -1,118 +1,118 @@
 <script type="text/javascript">
-    if(VRS && VRS.globalDispatch && VRS.serverConfig) {
-        VRS.globalDispatch.hook(VRS.globalEvent.bootstrapCreated, function(bootStrap) {
-            if(VRS.globalOptions && VRS.globalOptions.aircraftMarkers) {
-                addCustomAircraftMarkers();
-            }
-        });
-    }
+  if(VRS && VRS.globalDispatch && VRS.serverConfig) {
+    VRS.globalDispatch.hook(VRS.globalEvent.bootstrapCreated, function(bootStrap) {
+      if(VRS.globalOptions && VRS.globalOptions.aircraftMarkers) {
+        addCustomAircraftMarkers();
+      }
+    });
+  }
 
-    function addCustomAircraftMarkers()
+  function addCustomAircraftMarkers()
+  {
+    var flarmId = 150;
     {
-	var flarmId = 150;
-        {
-	VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-          normalFileName: 'W3A_sar.png',
-          selectedFileName: 'W3A_sar.png',
-          matches: function(aircraft) { return (aircraft.modelIcao.val === 'W3' && (aircraft.squawk.val ==='0045' || aircraft.squawk.val === '0046')); }
-        }));
-        VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker(
-	  normalFileName: 'W3A_camo.png',
-          selectedFileName: 'W3A_camo.png',
-          matches: function(aircraft) { return (aircraft.modelIcao.val === 'W3' && aircraft.isMilitary.val); }
-        }));	
-        VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'WTC-Heavy_mil-4-Jet.png',
-            selectedFileName: 'WTC-Heavy_mil-4-Jet-Selected.png',
-            size: { width: 60, height: 60 },
-            matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Jet) && (aircraft.species.val !== VRS.Species.Helicopter) && aircraft.countEngines.val === '4'); }
-        }));
-        VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'FLARM-Type-GLID.png',
-            selectedFileName: 'FLARM-Type-GLID-Selected.png',
-            size: { width: 60, height: 60 },
-            matches: function(aircraft) { return (aircraft.receiverId.val === flarmId); }
-        }));
-        VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'FLARM-Landplane.png',
-            selectedFileName: 'FLARM-Landplane-Selected.png',
-            size: { width: 60, height: 60 },
-            matches: function(aircraft) { return (aircraft.receiverId.val === flarmId && aircraft.species.val === VRS.Species.LandPlane); }
-        }));
-        VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'FLARM-Helicopter.png',
-            selectedFileName: 'FLARM-Helicopter-Selected.png',
-            size: { width: 60, height: 60 },
-            matches: function(aircraft) { return (aircraft.receiverId.val === flarmId && aircraft.species.val === VRS.Species.Helicopter); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: '4-TurboProp_mil.png',
-            selectedFileName: '4-TurboProp_milSelected.png',
-            size: { width: 60, height: 60 },
-            matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Turbo) && (aircraft.species.val !== VRS.Species.Helicopter) && aircraft.countEngines.val === '4'); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'WTC-Heavy_mil-2-Jet.png',
-            selectedFileName: 'WTC-Heavy_mil-2-Jet-Selected.png',
-            size: { width: 60, height: 60 },
-            matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Jet) && (aircraft.species.val !== VRS.Species.Helicopter) && (aircraft.countEngines.val === '2' || aircraft.countEngines.val === '3' )); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'WTC-Medium-2-Turbo_mil.png',
-            selectedFileName: 'WTC-Medium-2-Turbo-milSelected.png',
-            size: { width: 40, height: 40 },
-            matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Turbo) && (aircraft.species.val !== VRS.Species.Helicopter) && aircraft.countEngines.val === '2'); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'Helicopter_mil.png',
-            selectedFileName: 'Helicopter_milSelected.png',
-            size: { width: 60, height: 60 },
-            matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.species.val === VRS.Species.Helicopter)); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'Radar.png',
-            selectedFileName: 'Radar.png',
-            size: { width: 40, height: 40 },
-            matches: function(aircraft) { return aircraft.modelIcao.val === 'RADAR'; }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'F16.png',
-            selectedFileName: 'F16Selected.png',
-            size: { width: 40, height: 40 },
-            matches: function (aircraft) {
-                return aircraft.engineType.val === VRS.EngineType.Jet && aircraft.isMilitary.val &&
-                aircraft.wakeTurbulenceCat.val === VRS.WakeTurbulenceCategory.Medium && aircraft.countEngines.val === '1'; }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'HelicopterMedical.png',
-            selectedFileName: 'HelicopterMedicalSelected.png',
-            size: { width: 40, height: 40 },
-            matches: function(aircraft) { return (aircraft.squawk.val === '0045') || (aircraft.squawk.val === '0046') || (aircraft.squawk.val === '0047') || ((aircraft.icao.val.length === 6 && aircraft.icao.val.substring(0, 2) !== '49') && (aircraft.squawk.val === '0020')); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'FollowMe.png',
-            selectedFileName: 'FollowMe.png',
-            size: { width: 40, height: 40 },
-            matches: function(aircraft) { return (aircraft.modelIcao.val === 'CLEAN') || (aircraft.modelIcao.val === 'CLEANER')  || (aircraft.modelIcao.val === 'TUG') || (aircraft.modelIcao.val === 'SQB'); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'Auto.png',
-            selectedFileName: 'Auto.png',
-            size: { width: 40, height: 40 },
-            matches: function(aircraft) { return (aircraft.modelIcao.val === 'SAFETY CAR') || (aircraft.modelIcao.val === 'FLLME') || (aircraft.modelIcao.val === 'ELECTRIC') || (aircraft.modelIcao.val === 'BIRD') ||(aircraft.modelIcao.val === 'AD REPAIR') || (aircraft.modelIcao.val === 'CAR'); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'Fire.png',
-            selectedFileName: 'Fire.png',
-            size: { width: 40, height: 40 },
-            matches: function(aircraft) { return (aircraft.modelIcao.val === 'FIRE'); }
-        }));
-		VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-            normalFileName: 'UFO.png',
-            selectedFileName: 'UFO.png',
-            size: { width: 40, height: 40 },
-            matches: function(aircraft) { return (aircraft.modelIcao.val === 'UFO'); }
-        }));
-		}
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'W3A_sar.png',
+        selectedFileName: 'W3A_sar.png',
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'W3' && (aircraft.squawk.val ==='0045' || aircraft.squawk.val === '0046')); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'W3A_camo.png',
+        selectedFileName: 'W3A_camo.png',
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'W3' && aircraft.isMilitary.val); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'WTC-Heavy_mil-4-Jet.png',
+        selectedFileName: 'WTC-Heavy_mil-4-Jet-Selected.png',
+        size: { width: 60, height: 60 },
+        matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Jet) && (aircraft.species.val !== VRS.Species.Helicopter) && aircraft.countEngines.val === '4'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'FLARM-Type-GLID.png',
+        selectedFileName: 'FLARM-Type-GLID-Selected.png',
+        size: { width: 60, height: 60 },
+        matches: function(aircraft) { return (aircraft.receiverId.val === flarmId); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'FLARM-Landplane.png',
+        selectedFileName: 'FLARM-Landplane-Selected.png',
+        size: { width: 60, height: 60 },
+        matches: function(aircraft) { return (aircraft.receiverId.val === flarmId && aircraft.species.val === VRS.Species.LandPlane); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'FLARM-Helicopter.png',
+        selectedFileName: 'FLARM-Helicopter-Selected.png',
+        size: { width: 60, height: 60 },
+        matches: function(aircraft) { return (aircraft.receiverId.val === flarmId && aircraft.species.val === VRS.Species.Helicopter); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: '4-TurboProp_mil.png',
+        selectedFileName: '4-TurboProp_milSelected.png',
+        size: { width: 60, height: 60 },
+        matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Turbo) && (aircraft.species.val !== VRS.Species.Helicopter) && aircraft.countEngines.val === '4'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'WTC-Heavy_mil-2-Jet.png',
+        selectedFileName: 'WTC-Heavy_mil-2-Jet-Selected.png',
+        size: { width: 60, height: 60 },
+        matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Jet) && (aircraft.species.val !== VRS.Species.Helicopter) && (aircraft.countEngines.val === '2' || aircraft.countEngines.val === '3' )); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'WTC-Medium-2-Turbo_mil.png',
+        selectedFileName: 'WTC-Medium-2-Turbo-milSelected.png',
+        size: { width: 40, height: 40 },
+        matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.engineType.val === VRS.EngineType.Turbo) && (aircraft.species.val !== VRS.Species.Helicopter) && aircraft.countEngines.val === '2'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'Helicopter_mil.png',
+        selectedFileName: 'Helicopter_milSelected.png',
+        size: { width: 60, height: 60 },
+        matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.species.val === VRS.Species.Helicopter)); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'Radar.png',
+        selectedFileName: 'Radar.png',
+        size: { width: 40, height: 40 },
+        matches: function(aircraft) { return aircraft.modelIcao.val === 'RADAR'; }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'F16.png',
+        selectedFileName: 'F16Selected.png',
+        size: { width: 40, height: 40 },
+        matches: function (aircraft) {
+          return aircraft.engineType.val === VRS.EngineType.Jet && aircraft.isMilitary.val &&
+              aircraft.wakeTurbulenceCat.val === VRS.WakeTurbulenceCategory.Medium && aircraft.countEngines.val === '1'; }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'HelicopterMedical.png',
+        selectedFileName: 'HelicopterMedicalSelected.png',
+        size: { width: 40, height: 40 },
+        matches: function(aircraft) { return (aircraft.squawk.val === '0045') || (aircraft.squawk.val === '0046') || (aircraft.squawk.val === '0047') || ((aircraft.icao.val.length === 6 && aircraft.icao.val.substring(0, 2) !== '49') && (aircraft.squawk.val === '0020')); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'FollowMe.png',
+        selectedFileName: 'FollowMe.png',
+        size: { width: 40, height: 40 },
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'CLEAN') || (aircraft.modelIcao.val === 'CLEANER')  || (aircraft.modelIcao.val === 'TUG') || (aircraft.modelIcao.val === 'SQB'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'Auto.png',
+        selectedFileName: 'Auto.png',
+        size: { width: 40, height: 40 },
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'SAFETY CAR') || (aircraft.modelIcao.val === 'FLLME') || (aircraft.modelIcao.val === 'ELECTRIC') || (aircraft.modelIcao.val === 'BIRD') ||(aircraft.modelIcao.val === 'AD REPAIR') || (aircraft.modelIcao.val === 'CAR'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'Fire.png',
+        selectedFileName: 'Fire.png',
+        size: { width: 40, height: 40 },
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'FIRE'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'UFO.png',
+        selectedFileName: 'UFO.png',
+        size: { width: 40, height: 40 },
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'UFO'); }
+      }));
     }
+  }
 </script>
