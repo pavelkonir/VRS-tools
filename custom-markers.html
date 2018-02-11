@@ -11,6 +11,16 @@
     {
 	var flarmId = 150;
         {
+	VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+          normalFileName: 'W3A_sar.png',
+          selectedFileName: 'W3A_sar.png',
+          matches: function(aircraft) { return (aircraft.modelIcao.val === 'W3' && (aircraft.squawk.val ==='0045' || aircraft.squawk.val === '0046')); }
+        }));
+        VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker(
+	  normalFileName: 'W3A_camo.png',
+          selectedFileName: 'W3A_camo.png',
+          matches: function(aircraft) { return (aircraft.modelIcao.val === 'W3' && aircraft.isMilitary.val); }
+        }));	
         VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
             normalFileName: 'WTC-Heavy_mil-4-Jet.png',
             selectedFileName: 'WTC-Heavy_mil-4-Jet-Selected.png',
