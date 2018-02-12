@@ -12,36 +12,6 @@
     var flarmId = 150;
     {
       VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-        normalFileName: 'SB39.png',
-        selectedFileName: 'SB39-Selected.png',
-        matches: function(aircraft) { return (aircraft.modelIcao.val === 'SB39' && aircraft.isMilitary.val); }
-      }));
-      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-        normalFileName: 'Mi24_3370.png',
-        selectedFileName: 'Mi24_3370-Selected.png',
-        matches: function(aircraft) { return (aircraft.modelIcao.val === 'MI24' && aircraft.registration.val === '3370'); }
-      }));
-      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-        normalFileName: 'Mi24_camo.png',
-        selectedFileName: 'Mi24_camo-Selected.png',
-        matches: function(aircraft) { return (aircraft.modelIcao.val === 'MI24' && aircraft.isMilitary.val); }
-      }));
-      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-        normalFileName: 'L159.png',
-        selectedFileName: 'L159-Selected.png',
-        matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.modelIcao.val === 'L39' || aircraft.modelIcao.val === 'L59' || aircraft.modelIcao.val === 'L159' )); }
-      }));
-      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-        normalFileName: 'W3A_sar.png',
-        selectedFileName: 'W3A_sar-Selected.png',
-        matches: function(aircraft) { return (aircraft.registration.val === '0714' || aircraft.registration.val === '0715' || aircraft.registration.val === '0716' || aircraft.registration.val === '0717' || aircraft.registration.val === '0718' || aircraft.registration.val === '0719'); }
-      }));
-      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
-        normalFileName: 'W3A_camo.png',
-        selectedFileName: 'W3A_camo-Selected.png',
-        matches: function(aircraft) { return (aircraft.registration.val === '0709' || aircraft.registration.val === '0711' || aircraft.registration.val === '0712' || aircraft.registration.val === '0713'); }
-      }));
-      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
         normalFileName: 'WTC-Heavy_mil-4-Jet.png',
         selectedFileName: 'WTC-Heavy_mil-4-Jet-Selected.png',
         size: { width: 60, height: 60 },
@@ -132,6 +102,42 @@
         selectedFileName: 'UFO.png',
         size: { width: 40, height: 40 },
         matches: function(aircraft) { return (aircraft.modelIcao.val === 'UFO'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'SB39.png',
+        selectedFileName: 'SB39-Selected.png',
+        size: { width: 80, height: 80 },
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'SB39' && aircraft.isMilitary.val); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'Mi24_camo.png',
+        selectedFileName: 'Mi24_camo-Selected.png',
+        size: { width: 80, height: 80 },
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'MI24' && aircraft.isMilitary.val); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'Mi24_3370.png',
+        selectedFileName: 'Mi24_3370-Selected.png',
+        size: { width: 80, height: 80 },
+        matches: function(aircraft) { return (aircraft.modelIcao.val === 'MI24' && aircraft.registration.val === '3370'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'L159.png',
+        selectedFileName: 'L159-Selected.png',
+        size: { width: 80, height: 80 },
+        matches: function(aircraft) { return (aircraft.isMilitary.val && (aircraft.modelIcao.val === 'L39' || aircraft.modelIcao.val === 'L59' || aircraft.modelIcao.val === 'L159' )); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'W3A_sar.png',
+        selectedFileName: 'W3A_sar-Selected.png',
+        size: { width: 80, height: 80 },
+        matches: function(aircraft) { return (aircraft.registration.val === '0714' || aircraft.registration.val === '0715' || aircraft.registration.val === '0716' || aircraft.registration.val === '0717' || aircraft.registration.val === '0718' || aircraft.registration.val === '0719'); }
+      }));
+      VRS.globalOptions.aircraftMarkers.unshift(new VRS.AircraftMarker({
+        normalFileName: 'W3A_camo.png',
+        selectedFileName: 'W3A_camo-Selected.png',
+        size: { width: 80, height: 80 },
+        matches: function(aircraft) { return (aircraft.registration.val === '0709' || aircraft.registration.val === '0711' || aircraft.registration.val === '0712' || aircraft.registration.val === '0713'); }
       }));
     }
   }
