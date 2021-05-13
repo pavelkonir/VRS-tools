@@ -14,12 +14,12 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                     var mm = this.getUTCMonth() + 1;
                     var dd = this.getUTCDate();
                     var hh = this.getUTCHours();
-                    var min = Math.floor(this.getUTCMinutes()/15)*15;
+                    var min = Math.floor(this.getUTCMinutes()/10)*10;
 
                     return [this.getFullYear(),
                       (mm>9 ? '' : '0') + mm,
                       (dd>9 ? '' : '0') + dd,
-                      '.',
+                      '_',
                       (hh>9 ? '' : '0') + hh,
                       (min>9 ? '' : '0') + min
                     ].join('');
@@ -27,8 +27,9 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
 
 
                   var imageBounds = new google.maps.LatLngBounds(
-                      new google.maps.LatLng(47.09,10.06),
-                      new google.maps.LatLng(51.889,20.223));
+                      new google.maps.LatLng(48.0471, 11.26687),
+                      new google.maps.LatLng(51.4667, 19.6378)
+                  );
 
                   var overlayOpts = {
                     opacity:0.6
@@ -45,8 +46,8 @@ if(VRS && VRS.globalDispatch && VRS.serverConfig) {
                         }
 
                         meteoLayerOverlay = new google.maps.GroundOverlay(
-                            'http://radar.bourky.cz/data/pacz2gmaps.z_max3d.'
-                            + fileNameDatePart + '.0.png',
+                            'https://www.in-pocasi.cz/data/chmi_v2/'
+                            + fileNameDatePart + '_r.png',
                             imageBounds, overlayOpts);
                         meteoLayerOverlay.setMap(map);
 
