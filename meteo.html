@@ -1,0 +1,117 @@
+<script type="text/javascript">
+    Date.prototype.utcSpecial = function () {
+        const yyyy = String(this.getFullYear());
+        const mm = String(this.getUTCMonth() + 1).padStart(2, '0');
+        const dd = String(this.getUTCDate()).padStart(2, '0');
+        const hh = String(this.getUTCHours()).padStart(2, '0');
+        const min = String(Math.floor(this.getUTCMinutes() / 10) * 10).padStart(2, '0');
+
+        return `${yyyy}${mm}${dd}_${hh}${min}`;
+    };
+
+    if (window.VRS && window.VRS.globalDispatch && window.VRS.serverConfig) {
+        window.VRS.globalDispatch.hook(
+            window.VRS.globalEvent.bootstrapCreated,
+            function (bootStrap) {
+                if (bootStrap.hookMapInitialised) {
+                    bootStrap.hookMapInitialised(function (pageSettings) {
+                        if (pageSettings.mapPlugin && pageSettings.mapPlugin.getNativeType() === 'GoogleMaps') {
+                            const map = pageSettings.mapPlugin.getNative();
+                            let lastDatePart = "";
+                            let showMeteo = false;
+                            let meteoLayerTemp = null;
+
+                            const imageBounds = new google.maps.LatLngBounds(
+                                new google.maps.LatLng(48.0471, 11.26687),
+                                new google.maps.LatLng(51.4667, 19.6378)
+                            );
+
+                            const overlayOpts = {
+                                opacity: 0.6
+                            }
+
+                            const isImageAvailable = function (url) {
+                                const http = new XMLHttpRequest();
+                                http.open('HEAD', url, false);
+                                http.send();
+
+                                return http.status === 200;
+                            }
+
+                            const meteoLayer = function () {
+                                if (showMeteo) {
+                                    const currentDate = new Date();
+                                    let utcFormatted = currentDate.utcSpecial()
+
+                                    if (lastDatePart !== utcFormatted) {
+                                        if (meteoLayerTemp != null) {
+                                            meteoLayerTemp.setMap(null);
+                                        }
+
+                                        let url = `https://www.in-pocasi.cz/data/chmi_v2/${utcFormatted}_r.png`;
+                                        if (!isImageAvailable(url)) {
+                                            const previousImageDate = new Date()
+                                            previousImageDate.setMinutes(currentDate.getMinutes() - 10);
+                                            utcFormatted = previousImageDate.utcSpecial()
+                                            url = `https://www.in-pocasi.cz/data/chmi_v2/${utcFormatted}_r.png`;
+                                        }
+
+                                        const meteoLayerOverlay = new google.maps.GroundOverlay(
+                                            url,
+                                            imageBounds,
+                                            overlayOpts
+                                        );
+                                        meteoLayerOverlay.setMap(map);
+
+                                        meteoLayerTemp = meteoLayerOverlay;
+                                        lastDatePart = utcFormatted;
+                                    }
+                                } else {
+                                    if (meteoLayerTemp != null) {
+                                        meteoLayerTemp.setMap(null);
+                                        meteoLayerTemp = null;
+                                        lastDatePart = '';
+                                    }
+                                }
+                            }
+
+                            const createControls = function () {
+                                const meteoControlDiv = document.createElement('div');
+                                meteoControlDiv.index = 2;
+
+                                const meteoUIMenu = document.createElement('div');
+                                meteoUIMenu.className = "vrsMenu";
+                                meteoUIMenu.style.paddingRight = "10px";
+                                meteoControlDiv.appendChild(meteoUIMenu);
+
+                                const meteoUI = document.createElement('div');
+                                meteoUI.className = "mapButton";
+                                meteoUIMenu.appendChild(meteoUI);
+
+                                const meteoText = document.createElement('span');
+                                meteoText.innerHTML = 'Meteo';
+                                meteoUI.appendChild(meteoText);
+
+                                meteoUIMenu.addEventListener('click', function () {
+                                    showMeteo = !showMeteo;
+                                    meteoLayer();
+                                });
+
+                                return meteoControlDiv;
+                            }
+
+                            meteoLayer();
+                            const button = createControls();
+
+                            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(button);
+
+                            window.setInterval(function () {
+                                meteoLayer();
+                            }, 1000 * 60);
+                        }
+                    });
+                }
+            }
+        );
+    }
+</script>
